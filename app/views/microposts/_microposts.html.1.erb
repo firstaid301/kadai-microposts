@@ -10,17 +10,17 @@
           <div>
             <p><%= micropost.content %></p>
           </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-2">
-                <% if current_user.id == micropost.user_id %>
-                  <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
-                <% end %>
-              </div> 
-              <div class="col-md-2">
-                <%= render 'favorites/like_button', micropost_id: micropost.id %></span>
-              </div>        
-            </div>
+          <div>
+            <% if current_user == micropost.user %>
+              <%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+            <% else %>
+              <% muser = micropost.user  %>
+              <% if muser.favorite?(micropost_id: micropost.id)  %> 
+                <%= link_to "unfavorit", favorites, method: :post, class: 'btn btn-danger btn-sm' %> 
+              <% else %>
+                <%= link_to "favorite", like_user_path(micropost.id), method: :get, class: 'btn btn-danger btn-sm' %> 
+              <% end %>
+            <% end %>
           </div>
         </div>
       </li>

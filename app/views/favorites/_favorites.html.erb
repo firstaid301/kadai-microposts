@@ -1,0 +1,24 @@
+<% @favorite_all = @loves %>
+<% @micropost_all = Micropost.all %>
+<% if @favorite_all.any? %>
+  <ul class="list-unstyled mt-2">
+    <% @favorite_all.each do |favorite| %>
+      <% if @micropost_all.find_by(id: favorite.micropost_id) %>
+          <li class="d-flex">
+            <img class="rounded me-2 mb-5" src="<%= gravatar_url(User.find_by(id: favorite.user_id),  { size: 64 }) %>" alt="">
+          <div>
+          <div>
+            <%= link_to favorite.user.name, user_path(User.find_by(id: favorite.user_id)), class: "text-decoration-none" %> <span class="text-muted">posted at <%= favorite.micropost.created_at %></span>
+          </div>
+          <div>
+            <p><%= favorite.micropost.content %></p>
+          </div>
+          <div>
+            <%= render 'favorites/like_button', micropost_id: favorite.micropost.id %>
+          </div>
+          </li>         
+      <% end %>
+    <% end %>    
+  </ul>
+  <%== pagy_bootstrap_nav(@pagy) %>
+<% end %>
