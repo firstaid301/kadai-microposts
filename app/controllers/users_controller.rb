@@ -6,7 +6,6 @@ class UsersController < ApplicationController
   end
 
   def show
-#    @favorite_all = Favorite.all
     @user = User.find(params[:id])
     @pagy, @microposts = pagy(@user.microposts.order(id: :desc))
     counts(@user)
@@ -44,7 +43,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @loves = @user.favorites.where(:user_id => params[:id])
     @pagy, @loves = pagy(@user.favorites)
-#    @pagy, @loves = pagy(@user.favorites.order(id: :desc))
     counts(@user)
   end
   

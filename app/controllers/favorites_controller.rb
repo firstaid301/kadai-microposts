@@ -2,7 +2,6 @@ class FavoritesController < ApplicationController
   before_action :require_user_logged_in
 
   def create
-#    binding.pry
     favorite = Favorite.new()
     favorite.user_id = current_user.id
     favorite.micropost_id = params[:micropost_id]
